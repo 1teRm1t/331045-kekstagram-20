@@ -38,7 +38,7 @@ var createPhotoElements = function () {
   var photoElement = [];
   for (var i = 0; i < TOTAL_PHOTO; i++) {
     var element = {
-      url: 'photos/' + (i + 1) + '.jpg',
+      url: 'photos/' + getRandomNumber(1, 25) + '.jpg',
       description: 'Описание фотографии',
       likes: getRandomNumber(15, 200),
       comments: createComments()
@@ -68,19 +68,14 @@ var renderCards = function (fragment) {
 
 renderCards(createPhotoElement(createPhotoElements()));
 
-var createNewCommets = function (photoElement) {
-  var socialCommets = document.querySelector('.social__comments');
-  var photoElementLength = photoElement.length;
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < photoElementLength; i++) {
-    var socialComment = document.createElement('li');
-    socialComment.classList.add('social__comment');
-    var icon = '<img class="social__picture" src="' + photoElement[i].icon + '"' + 'alt="' + photoElement[i].name + '"' + 'width="35" height="35">';
-    var text = '<p class=social__text>' + photoElement[i].message + '</p>';
-    socialComment.innerHTML = icon + text;
-    fragment.appendChild(socialComment);
-  }
-  socialCommets.appendChild(fragment);
+var createNewCommets = function (photo) {
+  var socialCommentTemplate = document.querySelector('.social__comment');
+  var element = socialCommentTemplate.cloneNode(true);
+  element.querySelector('.social__picture').src = photo.avatar;
+  element.querySelector('.social__picture').setAttribute('alt', photo.names);
+  element.querySelector('.social__text').textContent = photo.message;
+
+  return element;
 };
 
 var renderBigSizePhoto = function (photoElement) {
@@ -93,16 +88,19 @@ var renderBigSizePhoto = function (photoElement) {
   var socialCaption = document.querySelector('.social__caption');
   var commentsLoader = document.querySelector('.comments-loader');
   document.body.classList.add('modal-open');
-  bigPicture.classList.remove('.hidden');
+  bigPicture.classList.remove('hidden');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   bigPictureImg.src = photoElement.url;
   likesCount.textContent = photoElement.likes;
   commentsCount.textContent = photoElement.comments.length;
-  socialComments.innerHTML = '';
   socialCaption.textContent = photoElement.description;
 
-  createNewCommets(photoElement.comments);
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < photoElement.comments.length; i++) {
+    fragment.appendChild(createNewCommets(photoElement.comments[i]));
+  }
+  socialComments.appendChild(fragment);
 };
 
-renderBigSizePhoto(createPhotoElements());
+renderBigSizePhoto(createPhotoElements()[0]);
