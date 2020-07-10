@@ -15,7 +15,7 @@
     <!-- Фильтрация изображений от других пользователей -->
     <section class="img-filters  img-filters--inactive  container">
       <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
-      <form class="img-filters__form" ="index.html" method="get" autocomplete="off">
+      <form class="img-filters__form" action="index.html" method="get" autocomplete="off" action="https://echo.htmlacademy.ru">
         <button type=button class="img-filters__button  img-filters__button--active" id="filter-default">По умолчанию</button>
         <button type=button class="img-filters__button" id="filter-random">Случайные</button>
         <button type=button class="img-filters__button" id="filter-discussed">Обсуждаемые</button>
@@ -154,16 +154,7 @@
 
           <!-- Комментарии к изображению -->
           <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
-          <ul class="social__comments">
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-              <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
-            </li>
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-               <p class="social__text">Да это фоташоп!!!!!!!!</p>
-            </li>
-          </ul>
+          <ul class="social__comments"></ul>
 
           <!-- Кнопка для загрузки новой порции комментариев -->
           <button type="button" class="social__comments-loader  comments-loader">Загрузить еще</button>
@@ -196,6 +187,14 @@
       </ul>
     </div>
   </footer>
+
+  <!-- Шаблон случайного комментария -->
+  <template id="social__comment_template">
+    <li class="social__comment">
+      <img class="social__picture" src="avatar" alt="" width="35" height="35">
+      <p class="social__text"></p>
+    </li>
+  </template>
 
   <!-- Шаблон изображения случайного пользователя -->
   <template id="picture">
