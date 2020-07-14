@@ -15,7 +15,7 @@
     <!-- Фильтрация изображений от других пользователей -->
     <section class="img-filters  img-filters--inactive  container">
       <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
-      <form class="img-filters__form" action="index.html" method="get" autocomplete="off" action="https://echo.htmlacademy.ru">
+      <form class="img-filters__form" action="https://echo.htmlacademy.ru" method="get" autocomplete="off" >
         <button type=button class="img-filters__button  img-filters__button--active" id="filter-default">По умолчанию</button>
         <button type=button class="img-filters__button" id="filter-random">Случайные</button>
         <button type=button class="img-filters__button" id="filter-discussed">Обсуждаемые</button>
@@ -118,8 +118,8 @@
 
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
-                  <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
-                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                  <input class="text__hashtags" type="text" name="hashtags" placeholder="#ХэшТег">
+                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140"></textarea>
                 </fieldset>
 
                 <!-- Кнопка для отправки данных на сервер -->
@@ -160,15 +160,15 @@
           <button type="button" class="social__comments-loader  comments-loader">Загрузить еще</button>
 
           <!-- Форма для отправки комментария -->
-          <div class="social__footer">
+          <form class="social__footer" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
             <img class="social__picture" src="img/avatar-6.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-            <input type="text" class="social__footer-text" placeholder="Ваш комментарий...">
-            <button type="button" class="social__footer-btn" name="button">Отправить</button>
-          </div>
+            <input type="text" class="social__footer-text" maxlength="140" placeholder="Ваш комментарий...">
+            <button type="submit" class="social__footer-btn" name="button">Отправить</button>
+          </form>
         </div>
 
         <!-- Кнопка для выхода из полноэкранного просмотра изображения -->
-        <button type="reset" class="big-picture__cancel  cancel" id="picture-cancel">Закрыть</button>
+        <button type="reset" class="big-picture__cancel  cancel" id="picture-cancel" tabindex="0">Закрыть</button>
       </div>
     </section>
   </main>

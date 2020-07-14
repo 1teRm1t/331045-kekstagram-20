@@ -38,6 +38,7 @@ var createPhotoElements = function () {
   var photoElement = [];
   for (var i = 0; i < TOTAL_PHOTO; i++) {
     var element = {
+      id: i,
       url: 'photos/' + (i + 1) + '.jpg',
       description: 'Описание фотографии',
       likes: getRandomNumber(15, 200),
@@ -48,25 +49,29 @@ var createPhotoElements = function () {
   return photoElement;
 };
 
+var addElements = createPhotoElements();
+
 var createPhotoElement = function (photoElement) {
   var template = document.querySelector('#picture').content.querySelector('.picture');
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < TOTAL_PHOTO; i++) {
-    var templateElement = template.cloneNode(true);
-    templateElement.querySelector('.picture__img').src = photoElement[i].url;
-    templateElement.querySelector('.picture__comments').textContent = photoElement[i].comments.length;
-    templateElement.querySelector('.picture__likes').textContent = photoElement[i].likes;
-    fragment.appendChild(templateElement);
-  }
-  return fragment;
+  var templateElement = template.cloneNode(true);
+  templateElement.querySelector('.picture__img').src = photoElement.url;
+  templateElement.querySelector('.picture__comments').textContent = photoElement.comments.length;
+  templateElement.querySelector('.picture__likes').textContent = photoElement.likes;
+  templateElement.dataset.id = photoElement.id;
+  return templateElement;
 };
 
-var renderCards = function (fragment) {
-  var pictures = document.querySelector('.pictures');
+var pictures = document.querySelector('.pictures');
+
+var renderCards = function (frag) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < TOTAL_PHOTO; i++) {
+    fragment.appendChild(createPhotoElement(frag[i]));
+  }
   pictures.appendChild(fragment);
 };
 
-renderCards(createPhotoElement(createPhotoElements()));
+renderCards(addElements);
 
 var createNewComment = function (photo) {
   var socialCommentTemplateContent = document.querySelector('#social__comment_template').content;
@@ -88,32 +93,32 @@ var createNewComments = function (photoElement) {
   socialComments.appendChild(fragment);
 };
 
+var bigPicture = document.querySelector('.big-picture');
+
 var renderBigSizePhoto = function (photoElement) {
-  // var bigPicture = document.querySelector('.big-picture');
+  bigPicture.classList.remove('hidden');
   var bigPictureImg = document.querySelector('.big-picture__img img');
   var likesCount = document.querySelector('.likes-count');
   var commentsCount = document.querySelector('.comments-count');
   var socialCommentCount = document.querySelector('.social__comment-count');
   var socialCaption = document.querySelector('.social__caption');
   var commentsLoader = document.querySelector('.comments-loader');
-  // document.body.classList.add('modal-open');
-  // bigPicture.classList.remove('hidden');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   bigPictureImg.src = photoElement.url;
   likesCount.textContent = photoElement.likes;
   commentsCount.textContent = photoElement.comments.length;
   socialCaption.textContent = photoElement.description;
-
+  socialFooterText.addEventListener('input', getCorrectBigPhotoComment);
+  document.addEventListener('keydown', onEscapePress);
+  bigPictureCancel.addEventListener('click', closeBigPhoto);
   createNewComments(photoElement);
 };
-
-renderBigSizePhoto(createPhotoElements()[0]);
-
 
 var uploadFile = document.querySelector('#upload-file');
 var editForm = document.querySelector('.img-upload__overlay');
 var uploadCancel = document.querySelector('#upload-cancel');
+var uploadPreviewImg = document.querySelector('.img-upload__preview img');
 var body = document.querySelector('body');
 
 var onPopupEscPress = function (evt) {
@@ -164,6 +169,7 @@ var closePopup = function () {
   scaleControlBigger.removeEventListener('click', rescaleMax);
   document.removeEventListener('keydown', onPopupEscPress);
   uploadFile.value = '';
+  uploadPreviewImg.style.transform = '';
 };
 
 
@@ -171,7 +177,6 @@ var scaleControlSmaller = document.querySelector('.scale__control--smaller');
 var scaleControlBigger = document.querySelector('.scale__control--bigger');
 var scaleControlValue = document.querySelector('.scale__control--value');
 var effectsList = document.querySelector('.effects__list');
-var uploadPreviewImg = document.querySelector('.img-upload__preview img');
 var sliderToggle = document.querySelector('.img-upload__effect-level');
 var effectLevelValue = document.querySelector('.effect-level__value');
 var effectLevelLine = document.querySelector('.effect-level__line');
@@ -295,3 +300,56 @@ var getCorrectComment = function () {
   });
 };
 
+var bigPictureCancel = document.querySelector('.big-picture__cancel');
+
+var onEnterPress = function (evt) {
+  if (evt.key === 'Enter') {
+    var picture = evt.target.closest('.picture');
+    if (picture) {
+      var id = picture.dataset.id;
+      renderBigSizePhoto(addElements[id]);
+    }
+  }
+};
+
+var onEscapePress = function (evt) {
+  if (evt.key === 'Escape' && socialFooterText !== document.activeElement) {
+    closeBigPhoto();
+  }
+};
+
+var onOpenBigPhoto = function (evt) {
+  var photo = evt.target.closest('.picture');
+  for (var i = 0; i < addElements.length; i++) {
+    if (photo) {
+      var id = photo.dataset.id;
+      renderBigSizePhoto(addElements[id]);
+    }
+  }
+};
+
+var closeBigPhoto = function () {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onEscapePress);
+  socialFooterText.removeEventListener('input', getCorrectBigPhotoComment);
+  bigPictureCancel.removeEventListener('keydown', closeBigPhoto);
+};
+
+pictures.addEventListener('click', onOpenBigPhoto);
+pictures.addEventListener('keydown', onEnterPress);
+
+var socialFooterText = document.querySelector('.social__footer-text');
+
+var getCorrectBigPhotoComment = function () {
+  socialFooterText.addEventListener('input', function () {
+    var MAX_LENGTH_COMMENT = 140;
+    var valueText = socialFooterText.value.length;
+
+    if (valueText > MAX_LENGTH_COMMENT) {
+      socialFooterText.setCustomValidity('Длина комментария не может составлять больше 140 символов');
+    } else {
+      socialFooterText.setCustomValidity('');
+    }
+  });
+};
