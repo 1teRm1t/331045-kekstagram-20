@@ -11,7 +11,7 @@
       fragment.appendChild(window.createPhotoElement(frag[i]));
     }
     pictures.appendChild(fragment);
-  }
+  };
 
   renderCards(photos);
 
@@ -24,7 +24,7 @@
         window.getCleanComments();
       }
     }
-  }
+  };
 
   var onOpenBigPhoto = function (evt) {
     var photo = evt.target.closest('.picture');
@@ -32,7 +32,7 @@
       var id = photo.dataset.id;
       window.preview.open(photos[id]);
     }
-  }
+  };
 
   pictures.addEventListener('click', onOpenBigPhoto);
   pictures.addEventListener('keydown', onEnterPress);

@@ -15,12 +15,12 @@
   var getRandomNumber = function (min, max) {
     var randomNumber = Math.floor(min + Math.random() * (max + 1 - min));
     return randomNumber;
-  }
+  };
 
   var getArrayRandomElement = function (array) {
     var randomElement = Math.floor(Math.random() * array.length);
     return array[randomElement];
-  }
+  };
 
   var createComments = function () {
     var comments = [];
@@ -33,7 +33,7 @@
       comments.push(comment);
     }
     return comments;
-  }
+  };
 
   var createPhotoElements = function () {
     var photoElement = [];
@@ -48,7 +48,7 @@
       photoElement.push(element);
     }
     return photoElement;
-  }
+  };
 
   window.data = {
     createPhotoElements: createPhotoElements

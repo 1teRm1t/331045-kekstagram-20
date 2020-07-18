@@ -2,6 +2,7 @@
 
 (function () {
   var getCorrectHashtags = function () {
+    var hashtagInput = document.querySelector('.text__hashtags');
     var valueHashtag = hashtagInput.value;
     var MAX_HASHTAG_LENGTH = 20;
     var re = /^#[a-zA-Zа-яА-Я0-9]*$/;
@@ -25,9 +26,10 @@
         hashtagInput.setCustomValidity('');
       }
     }
-  }
+  };
 
   var getCorrectComment = function () {
+    var textDescription = document.querySelector('.text__description');
     textDescription.addEventListener('input', function () {
       var MAX_LENGTH_COMMENT = 140;
       var valueText = textDescription.value.length;
@@ -37,8 +39,8 @@
       } else {
         textDescription.setCustomValidity('');
       }
-    })
-  }
+    });
+  };
 
   window.getCorrectHashtags = getCorrectHashtags;
   window.getCorrectComment = getCorrectComment;

@@ -10,7 +10,7 @@
     element.querySelector('.social__text').textContent = photo.message;
 
     return element;
-  }
+  };
 
   var socialComments = document.querySelector('.social__comments');
 
@@ -20,14 +20,14 @@
       fragment.appendChild(createNewComment(photoElement.comments[i]));
     }
     socialComments.appendChild(fragment);
-  }
+  };
 
   var getCleanComments = function () {
     var comments = socialComments.children;
     while (comments.length !== 0) {
       comments[comments.length - 1].remove();
     }
-  }
+  };
 
   window.createNewComments = createNewComments;
   window.getCleanComments = getCleanComments;

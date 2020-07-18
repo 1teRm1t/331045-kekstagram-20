@@ -9,6 +9,6 @@
     templateElement.querySelector('.picture__likes').textContent = photoElement.likes;
     templateElement.dataset.id = photoElement.id;
     return templateElement;
-  }
+  };
   window.createPhotoElement = createPhotoElement;
 })();

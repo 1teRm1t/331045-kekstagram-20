@@ -24,8 +24,8 @@
         evt.preventDefault();
         editForm.classList.add('hidden');
       }
-    })
-  }
+    });
+  };
 
   var closePopup = function () {
     body.classList.remove('modal-open');
@@ -43,23 +43,23 @@
     uploadPreviewImg.className = '';
     uploadPreviewImg.style.transform = '';
     scaleControlValue.value = 100;
-  }
+  };
 
   uploadFile.addEventListener('change', function (evt) {
     evt.preventDefault();
     openPopup();
-  })
+  });
 
   var onPopupEscPress = function (evt) {
     if (evt.key === 'Escape' || evt.key === 'Enter') {
       evt.preventDefault();
       closePopup();
     }
-  }
+  };
 
   var closePopupButton = function () {
     closePopup();
-  }
+  };
 
   var scaleControlSmaller = document.querySelector('.scale__control--smaller');
   var scaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -83,7 +83,7 @@
       uploadPreviewImg.style.transform = 'scale(' + (scaleValue / 100) + ')';
       scaleControlValue.value = scaleValue + '%';
     }
-  }
+  };
 
   var rescaleMax = function () {
     var scaleValue = parseInt(scaleControlValue.value, 10);
@@ -92,7 +92,7 @@
       uploadPreviewImg.style.transform = 'scale(' + (scaleValue / 100) + ')';
       scaleControlValue.value = scaleValue + '%';
     }
-  }
+  };
 
   var getPinPosition = function () {
     var depth = effectLevelPin.offsetLeft;
@@ -102,7 +102,7 @@
     effectLevelPin.style.left = pin + '%';
     effectLevelDepth.style.width = pin + '%';
     return pin;
-  }
+  };
 
   var effectsSettingIntensity = function (effect, pin) {
     if (effect === 'none') {
@@ -123,7 +123,7 @@
     if (effect === 'heat') {
       uploadPreviewImg.style.filter = 'brightness(' + pin * 3 / 100 + ')';
     }
-  }
+  };
 
   var effectChange = function (evt) {
     effectLevelValue.value = 100;
@@ -137,10 +137,10 @@
     } else {
       sliderToggle.classList.add('hidden');
     }
-  }
+  };
 
   var effectsChange = function () {
     var currentValue = document.querySelector('.effects__radio:checked');
     effectsSettingIntensity(currentValue.value, getPinPosition());
-  }
+  };
 })();

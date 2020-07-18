@@ -23,7 +23,7 @@
     document.addEventListener('keydown', onEscapePress);
     bigPictureCancel.addEventListener('click', closeBigPhoto);
     window.createNewComments(photoElement);
-  }
+  };
 
   var closeBigPhoto = function () {
     bigPicture.classList.add('hidden');
@@ -32,13 +32,13 @@
     socialFooterText.removeEventListener('input', getCorrectBigPhotoComment);
     bigPictureCancel.removeEventListener('keydown', closeBigPhoto);
     window.getCleanComments();
-  }
+  };
 
   var onEscapePress = function (evt) {
     if (evt.key === 'Escape' && socialFooterText !== document.activeElement) {
       closeBigPhoto();
     }
-  }
+  };
 
   var getCorrectBigPhotoComment = function () {
     socialFooterText.addEventListener('input', function () {
@@ -50,8 +50,8 @@
       } else {
         socialFooterText.setCustomValidity('');
       }
-    })
-  }
+    });
+  };
 
   window.preview = {
     open: renderBigSizePhoto,
