@@ -10,39 +10,31 @@
   var openPopup = function () {
     body.classList.add('modal-open');
     editForm.classList.remove('hidden');
-    uploadCancel.addEventListener('keydown', onPopupEscPress);
     uploadCancel.addEventListener('click', closePopupButton);
     hashtagInput.addEventListener('input', window.getCorrectHashtags);
     textDescription.addEventListener('input', window.getCorrectComment);
     effectsList.addEventListener('change', effectChange);
-    effectLevelPin.addEventListener('mouseup', effectsChange);
     scaleControlSmaller.addEventListener('click', rescaleMin);
     scaleControlBigger.addEventListener('click', rescaleMax);
     sliderToggle.classList.add('hidden');
-    document.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Escape' && hashtagInput !== document.activeElement && textDescription !== document.activeElement) {
-        evt.preventDefault();
-        editForm.classList.add('hidden');
-      }
-    });
+    document.addEventListener('keydown', onPopupEnterPress);
+    document.addEventListener('keydown', onPopupEscClose);
   };
 
   var closePopup = function () {
     body.classList.remove('modal-open');
     editForm.classList.add('hidden');
-    uploadCancel.removeEventListener('keydown', onPopupEscPress);
     uploadCancel.removeEventListener('click', closePopupButton);
     hashtagInput.removeEventListener('input', window.getCorrectHashtags);
     textDescription.removeEventListener('input', window.getCorrectComment);
     effectsList.removeEventListener('change', effectChange);
-    effectLevelPin.removeEventListener('mouseup', effectsChange);
     scaleControlSmaller.removeEventListener('click', rescaleMin);
     scaleControlBigger.removeEventListener('click', rescaleMax);
-    document.removeEventListener('keydown', onPopupEscPress);
+    document.removeEventListener('keydown', onPopupEnterPress);
+    document.removeEventListener('keydown', onPopupEscClose);
     uploadFile.value = '';
-    uploadPreviewImg.className = '';
-    uploadPreviewImg.style.transform = '';
-    scaleControlValue.value = 100;
+    uploadPreviewImg.classList = '';
+    uploadPreviewImg.style = '';
   };
 
   uploadFile.addEventListener('change', function (evt) {
@@ -50,8 +42,15 @@
     openPopup();
   });
 
-  var onPopupEscPress = function (evt) {
-    if (evt.key === 'Escape' || evt.key === 'Enter') {
+  var onPopupEscClose = function (evt) {
+    if (evt.key === 'Escape' && hashtagInput !== document.activeElement && textDescription !== document.activeElement) {
+      evt.preventDefault();
+      closePopup();
+    }
+  };
+
+  var onPopupEnterPress = function (evt) {
+    if (evt.key === 'Enter') {
       evt.preventDefault();
       closePopup();
     }
@@ -98,9 +97,6 @@
     var depth = effectLevelPin.offsetLeft;
     var width = effectLevelLine.offsetWidth;
     var pin = Math.round(100 * depth / width);
-    effectLevelValue.value = pin;
-    effectLevelPin.style.left = pin + '%';
-    effectLevelDepth.style.width = pin + '%';
     return pin;
   };
 
@@ -141,6 +137,52 @@
 
   var effectsChange = function () {
     var currentValue = document.querySelector('.effects__radio:checked');
-    effectsSettingIntensity(currentValue.value, getPinPosition());
+    var pin = getPinPosition();
+    effectLevelValue.value = pin;
+    effectsSettingIntensity(currentValue.value, pin);
   };
+
+  effectLevelPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var percent = effectLevelLine.getBoundingClientRect().width / 100;
+    var startCoords = {
+      x: evt.clientX,
+      xLineValue: effectLevelValue.value
+    };
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        xLineValue: (startCoords.x - moveEvt.clientX) / percent
+      };
+      if (((startCoords.xLineValue >= 0) && (startCoords.xLineValue <= 100)) || ((startCoords.xLineValue > 100) && (shift.x > 0)) || ((startCoords.xLineValue < 0) && (shift.x < 0))) {
+        effectLevelPin.style.left = (effectLevelPin.offsetLeft - shift.x) + 'px';
+        effectLevelValue.value = effectLevelValue.value - shift.xLineValue;
+        effectLevelDepth.style.width = effectLevelValue.value + '%';
+        effectsChange(effectLevelValue.value);
+        startCoords = {
+          x: moveEvt.clientX,
+          xLineValue: effectLevelValue.value
+        };
+      }
+      if (startCoords.xLineValue < 0) {
+        effectLevelPin.style.left = '0%';
+        effectLevelValue.value = 0;
+        effectLevelDepth.style.width = '0%';
+      }
+      if (startCoords.xLineValue > 100) {
+        effectLevelPin.style.left = '100%';
+        effectLevelValue.value = 100;
+        effectLevelDepth.style.width = '100%';
+      }
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 })();
