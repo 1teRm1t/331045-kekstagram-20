@@ -1,41 +1,42 @@
 'use strict';
 
 (function () {
-  var TOTAL_PHOTO = 25;
-  var photos = window.data.createPhotoElements();
   var pictures = document.querySelector('.pictures');
 
   var renderCards = function (frag) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < TOTAL_PHOTO; i++) {
-      fragment.appendChild(window.createPhotoElement(frag[i]));
+    for (var i = 0; i < frag.length; i++) {
+      fragment.appendChild(window.createPhotoElement(frag[i], i));
     }
     pictures.appendChild(fragment);
   };
 
-  renderCards(photos);
-
-  var onEnterPress = function (evt) {
-    if (evt.key === 'Enter') {
+  var onSuccess = function (photos) {
+    renderCards(photos);
+    pictures.addEventListener('click', function onOpenBigPhoto(evt) {
       var photo = evt.target.closest('.picture');
       if (photo) {
         var id = photo.dataset.id;
         window.preview.open(photos[id]);
-        window.getCleanComments();
+        document.addEventListener('keydown', onEscapePress);
       }
+    });
+  };
+
+  var onError = function (errorMessage) {
+    var block = document.querySelector('main');
+    var errorBlock = document.createElement('div');
+    errorBlock.classList.add('error-block');
+    errorBlock.textContent = errorMessage;
+    block.insertAdjacentElement('beforebegin', errorBlock);
+  };
+
+  var onEscapePress = function (evt) {
+    if (evt.keyCode === 27) {
+      window.preview.close();
+      document.removeEventListener('keydown', onEscapePress);
     }
   };
 
-  var onOpenBigPhoto = function (evt) {
-    var photo = evt.target.closest('.picture');
-    if (photo) {
-      var id = photo.dataset.id;
-      window.preview.open(photos[id]);
-    }
-  };
-
-  pictures.addEventListener('click', onOpenBigPhoto);
-  pictures.addEventListener('keydown', onEnterPress);
+  window.load.download(onSuccess, onError);
 })();
-
-
