@@ -23,6 +23,7 @@
     document.addEventListener('keydown', onEscapePress);
     bigPictureCancel.addEventListener('click', closeBigPhoto);
     window.createNewComments(photoElement);
+    window.getComments();
   };
 
   var closeBigPhoto = function () {
@@ -31,7 +32,7 @@
     document.removeEventListener('keydown', onEscapePress);
     socialFooterText.removeEventListener('input', getCorrectBigPhotoComment);
     bigPictureCancel.removeEventListener('keydown', closeBigPhoto);
-    window.getCleanComments();
+    // window.getCleanComments();
   };
 
   var onEscapePress = function (evt) {

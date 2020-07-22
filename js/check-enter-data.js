@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var uploadForm = document.querySelector('.img-upload__form');
+
   var getCorrectHashtags = function () {
     var hashtagInput = document.querySelector('.text__hashtags');
     var valueHashtag = hashtagInput.value;
@@ -41,6 +43,17 @@
       }
     });
   };
+
+  uploadForm.addEventListener('submit', function (evt) {
+    window.load.upload(new FormData(uploadForm), function () {
+      window.editform.closePopup();
+      window.messages.successLoad();
+    }, function () {
+      window.editform.closePopup();
+      window.messages.errorLoad();
+    });
+    evt.preventDefault();
+  });
 
   window.getCorrectHashtags = getCorrectHashtags;
   window.getCorrectComment = getCorrectComment;

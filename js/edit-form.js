@@ -5,6 +5,7 @@
   var editForm = document.querySelector('.img-upload__overlay');
   var uploadCancel = document.querySelector('#upload-cancel');
   var uploadPreviewImg = document.querySelector('.img-upload__preview img');
+  var defaultEffect = document.querySelector('.effects__radio[value="none"]');
   var body = document.querySelector('body');
 
   var openPopup = function () {
@@ -33,8 +34,12 @@
     document.removeEventListener('keydown', onPopupEnterPress);
     document.removeEventListener('keydown', onPopupEscClose);
     uploadFile.value = '';
+    hashtagInput.value = '';
+    textDescription.value = '';
     uploadPreviewImg.classList = '';
     uploadPreviewImg.style = '';
+    defaultEffect.checked = true;
+    scaleControlValue.value = '100%';
   };
 
   uploadFile.addEventListener('change', function (evt) {
@@ -185,4 +190,8 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.editform = {
+    closePopup: closePopup
+  };
 })();
