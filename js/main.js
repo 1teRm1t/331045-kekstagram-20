@@ -24,15 +24,15 @@
   };
 
   var onError = function (errorMessage) {
-    var block = document.querySelector('main');
+    var main = document.querySelector('main');
     var errorBlock = document.createElement('div');
     errorBlock.classList.add('error-block');
     errorBlock.textContent = errorMessage;
-    block.insertAdjacentElement('beforebegin', errorBlock);
+    main.insertAdjacentElement('beforebegin', errorBlock);
   };
 
   var onEscapePress = function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.key === 'Escape') {
       window.preview.close();
       document.removeEventListener('keydown', onEscapePress);
     }
