@@ -105,25 +105,29 @@
     return pin;
   };
 
+  var effects = {
+    none: function () {
+      return '';
+    },
+    chrome: function (pin) {
+      return 'grayscale(' + pin / 100 + ')';
+    },
+    sepia: function (pin) {
+      return 'sepia(' + pin / 100 + ')';
+    },
+    marvin: function (pin) {
+      return 'invert(' + pin + '%)';
+    },
+    phobos: function (pin) {
+      return 'blur(' + (pin * 3 / 100) + 'px)';
+    },
+    heat: function (pin) {
+      return 'brightness(' + pin * 3 / 100 + ')';
+    }
+  };
+
   var effectsSettingIntensity = function (effect, pin) {
-    if (effect === 'none') {
-      uploadPreviewImg.style.filter = '';
-    }
-    if (effect === 'chrome') {
-      uploadPreviewImg.style.filter = 'grayscale(' + pin / 100 + ')';
-    }
-    if (effect === 'sepia') {
-      uploadPreviewImg.style.filter = 'sepia(' + pin / 100 + ')';
-    }
-    if (effect === 'marvin') {
-      uploadPreviewImg.style.filter = 'invert(' + pin + '%)';
-    }
-    if (effect === 'phobos') {
-      uploadPreviewImg.style.filter = 'blur(' + (pin * 3 / 100) + 'px)';
-    }
-    if (effect === 'heat') {
-      uploadPreviewImg.style.filter = 'brightness(' + pin * 3 / 100 + ')';
-    }
+    uploadPreviewImg.style.filter = effects[effect](pin);
   };
 
   var effectChange = function (evt) {

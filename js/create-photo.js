@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
+  var template = document.querySelector('#picture').content.querySelector('.picture');
+
   var createPhotoElement = function (photoElement, id) {
-    var template = document.querySelector('#picture').content.querySelector('.picture');
     var templateElement = template.cloneNode(true);
     templateElement.querySelector('.picture__img').src = photoElement.url;
     templateElement.querySelector('.picture__comments').textContent = photoElement.comments.length;
