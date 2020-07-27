@@ -24,6 +24,7 @@
 
       reader.readAsDataURL(file);
     }
+
     window.matches = matches;
   });
 })();

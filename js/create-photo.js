@@ -11,5 +11,6 @@
     templateElement.dataset.id = id;
     return templateElement;
   };
+
   window.createPhotoElement = createPhotoElement;
 })();
