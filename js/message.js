@@ -25,7 +25,7 @@
         removeMessage(err);
       }
     });
-  }
+  };
 
   var createErrorMark = function (errorMessage) {
     var errorBlock = document.createElement('div');

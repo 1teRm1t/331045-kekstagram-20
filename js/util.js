@@ -2,7 +2,7 @@
 
 (function () {
   var getRandomNumber = function (min, max) {
-    var randomNumber = Math.floor(min + Math.random() * (max + 1 - min));
+    var randomNumber = Math.floor(min + Math.random() * (max - min));
     return randomNumber;
   };
 
