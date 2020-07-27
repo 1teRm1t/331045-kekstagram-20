@@ -25,12 +25,14 @@
   };
 
   var removesPhotos = function (className, container) {
-    var cleanPhotos = document.querySelectorAll(className);
+    var cleanPhotos = container.querySelectorAll(className);
     cleanPhotos.forEach(function (it) {
       container.removeChild(it);
     });
   };
 
-  window.util.random = getArrayRandomNumber;
-  window.util.clean = removesPhotos;
+  window.util = {
+    random: getArrayRandomNumber,
+    clean: removesPhotos
+  };
 })();

@@ -7,7 +7,7 @@
   var renderCards = function (frag) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < frag.length; i++) {
-      pictures.appendChild(window.createPhotoElement(frag[i], i));
+      fragment.appendChild(window.createPhotoElement(frag[i], i));
     }
     pictures.appendChild(fragment);
   };

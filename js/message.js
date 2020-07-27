@@ -14,7 +14,7 @@
     document.removeEventListener('keydown', onEscapePress);
   };
 
-  function deleteMessage(err) {
+  var deleteMessage = function (err) {
     window.onEscapePress = function (evt) {
       window.editform.closePopup(evt, function () {
         removeMessage(err);
