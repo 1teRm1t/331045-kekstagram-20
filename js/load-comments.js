@@ -8,9 +8,10 @@
     var bigPicture = document.querySelector('.big-picture');
     var commentsLoader = bigPicture.querySelector('.comments-loader');
     var socialComments = bigPicture.querySelector('.social__comments');
-    var socialComment = socialComments.querySelector('.social__comment');
+    var socialComment = socialComments.querySelectorAll('.social__comment');
     var socialCommentCount = bigPicture.querySelector('.social__comment-count');
     commentsLoader.classList.remove('hidden');
+    socialCommentCount.classList.remove('hidden');
 
     var getCommentsList = function () {
       for (var i = 0; i < socialComment.length; i++) {

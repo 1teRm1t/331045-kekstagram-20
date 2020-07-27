@@ -14,7 +14,7 @@
     document.removeEventListener('keydown', onEscapePress);
   };
 
-  function deleteMessage(err) {
+  var deleteMessage = function (err) {
     window.onEscapePress = function (evt) {
       window.editform.closePopup(evt, function () {
         removeMessage(err);
@@ -25,7 +25,7 @@
         removeMessage(err);
       }
     });
-  }
+  };
 
   var createErrorMark = function (errorMessage) {
     var errorBlock = document.createElement('div');
