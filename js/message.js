@@ -16,7 +16,7 @@
 
   var deleteMessage = function (err) {
     window.onEscapePress = function (evt) {
-      window.editform.closePopup(evt, function () {
+      window.editForm.closePopup(evt, function () {
         removeMessage(err);
       });
     };

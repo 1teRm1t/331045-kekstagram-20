@@ -8,7 +8,8 @@
     OK: 200
   };
 
-  var loadingData = function (url, method, onSuccess, onError) {
+  var loadingData = function (url, method, onSuccess, onError, data) {
+    data = data;
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,15 +31,15 @@
     xhr.timeout = TIMEOUT;
 
     xhr.open(method, url);
-    xhr.send();
+    xhr.send(data);
   };
 
   window.load = {
     download: function (onSuccess, onError) {
       loadingData(URL_DOWNLOAD, 'GET', onSuccess, onError);
     },
-    upload: function (onSuccess, onError) {
-      loadingData(URL, 'POST', onSuccess, onError);
+    upload: function (data, onSuccess, onError) {
+      loadingData(URL, 'POST', onSuccess, onError, data);
     }
   };
 })();

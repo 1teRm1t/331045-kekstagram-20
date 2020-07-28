@@ -2,10 +2,10 @@
 
 (function () {
   var COMMENTS_COUNT = 5;
+  var bigPicture = document.querySelector('.big-picture');
 
   var getComments = function () {
     var comments = COMMENTS_COUNT;
-    var bigPicture = document.querySelector('.big-picture');
     var commentsLoader = bigPicture.querySelector('.comments-loader');
     var socialComments = bigPicture.querySelector('.social__comments');
     var socialComment = socialComments.querySelectorAll('.social__comment');

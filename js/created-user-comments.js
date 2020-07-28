@@ -1,9 +1,10 @@
 'use strict';
 
 (function () {
+  var socialCommentTemplateContent = document.querySelector('#social__comment_template').content;
+  var socialCommentTemplate = socialCommentTemplateContent.querySelector('.social__comment');
+
   var createNewComment = function (photo) {
-    var socialCommentTemplateContent = document.querySelector('#social__comment_template').content;
-    var socialCommentTemplate = socialCommentTemplateContent.querySelector('.social__comment');
     var element = socialCommentTemplate.cloneNode(true);
     element.querySelector('.social__picture').src = photo.avatar;
     element.querySelector('.social__picture').alt = photo.names;
@@ -29,6 +30,8 @@
     }
   };
 
-  window.createNewComments = createNewComments;
-  window.getCleanComments = getCleanComments;
+  window.userComments = {
+    createNewComments: createNewComments,
+    getCleanComments: getCleanComments
+  };
 })();

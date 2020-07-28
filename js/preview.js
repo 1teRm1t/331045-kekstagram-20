@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MAX_LENGTH_COMMENT = 140;
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
   var socialFooterText = document.querySelector('.social__footer-text');
@@ -20,17 +21,19 @@
     socialFooterText.addEventListener('input', getCorrectBigPhotoComment);
     document.addEventListener('keydown', onEscapePress);
     bigPictureCancel.addEventListener('click', closeBigPhoto);
-    window.createNewComments(photoElement);
+    window.userComments.createNewComments(photoElement);
     window.getComments();
   };
 
   var closeBigPhoto = function () {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    document.removeEventListener('keydown', onEscapePress);
-    socialFooterText.removeEventListener('input', getCorrectBigPhotoComment);
-    bigPictureCancel.removeEventListener('keydown', closeBigPhoto);
-    window.getCleanComments();
+    if (socialFooterText !== document.activeElement) {
+      bigPicture.classList.add('hidden');
+      document.body.classList.remove('modal-open');
+      document.removeEventListener('keydown', onEscapePress);
+      socialFooterText.removeEventListener('input', getCorrectBigPhotoComment);
+      bigPictureCancel.removeEventListener('keydown', closeBigPhoto);
+      window.userComments.getCleanComments();
+    }
   };
 
   var onEscapePress = function (evt) {
@@ -41,7 +44,6 @@
 
   var getCorrectBigPhotoComment = function () {
     socialFooterText.addEventListener('input', function () {
-      var MAX_LENGTH_COMMENT = 140;
       var valueText = socialFooterText.value.length;
 
       if (valueText > MAX_LENGTH_COMMENT) {

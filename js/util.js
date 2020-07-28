@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MAX_ITEM_COUNT = 10;
+
   var getRandomNumber = function (min, max) {
     var randomNumber = Math.floor(min + Math.random() * (max - min));
     return randomNumber;
@@ -21,7 +23,7 @@
         array[array.length] = randomNumb;
       }
     }
-    return array.slice(0, 10);
+    return array.slice(0, MAX_ITEM_COUNT);
   };
 
   var removesPhotos = function (className, container) {

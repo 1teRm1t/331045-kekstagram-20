@@ -3,6 +3,7 @@
 (function () {
   var pictures = document.querySelector('.pictures');
   var imgFilters = document.querySelector('.img-filters');
+  var buttons = imgFilters.querySelectorAll('button');
 
   var getDefaultPhotos = function (photos) {
     return photos.slice();
@@ -26,7 +27,6 @@
   };
 
   var onChangeFilters = function (photos) {
-    var buttons = imgFilters.querySelectorAll('button');
     var sortPhotos = [];
 
     var onButtonClickFilter = window.debounce(function (evt) {
@@ -54,9 +54,9 @@
       }
     };
 
-    var addFilterEvent = function (element, elementId, button) {
+    var addFilterEvent = function (element, elementId, elementFunction) {
       if (element.id === elementId) {
-        element.addEventListener('click', button);
+        element.addEventListener('click', elementFunction);
       }
     };
 
